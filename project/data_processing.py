@@ -54,10 +54,10 @@ def create_data(past_elements: int = 8, future_elements: int = 8, device=torch.d
             past_and_curr_positions = position_start.repeat(past_elements, num_agents, 1)
             past_and_curr_states = states_start.repeat(past_elements, num_agents, 1)
             future_agent_ids = ids_start.repeat(future_elements, num_agents, 1)
-            # future_scene = scene_start.repeat(future_elements, 1, 1, 1)
-            # future_traffic_light = traffic_light_start.repeat(future_elements, 1)
+            future_scene = scene_start.repeat(future_elements, 1, 1, 1)
+            future_traffic_light = traffic_light_start.repeat(future_elements, 1)
             future_positions = position_start.repeat(future_elements, num_agents, 1)
-            # future_states = states_start.repeat(future_elements, num_agents, 1)
+            future_states = states_start.repeat(future_elements, num_agents, 1)
 
             t1, t2 = 1, 1
             for j in range(idx + future_elements, idx - past_elements, -1):
@@ -101,17 +101,15 @@ def create_data(past_elements: int = 8, future_elements: int = 8, device=torch.d
                     t1 += 2
                 else:
                     future_agent_ids[idx + future_elements - j - t2, :, :] = agent_ids.unsqueeze(-1)
-                    # future_scene[idx + future_elements - j - t2, :, :, :] = scene.unsqueeze(0)
-                    # future_traffic_light[idx + future_elements - j - t2, :] = traffic_light.unsqueeze(0)
+                    future_scene[idx + future_elements - j - t2, :, :, :] = scene.unsqueeze(0)
+                    future_traffic_light[idx + future_elements - j - t2, :] = traffic_light.unsqueeze(0)
                     future_positions[idx + future_elements - j - t2, :, :] = position
-                    # future_states[idx + future_elements - j - t2, :, :] = states
+                    future_states[idx + future_elements - j - t2, :, :] = states
                     t2 += 2
 
             dataset.append({"past_and_curr": [past_and_curr_agent_ids, past_and_curr_scene,
                                               past_and_curr_traffic_light, past_and_curr_positions, past_and_curr_states],
-                            # "future": [future_agent_ids, future_scene, future_traffic_light, future_positions,
-                            # future_states]})
-                            "future": [future_agent_ids, future_positions]})
+                            "future": [future_agent_ids, future_scene, future_traffic_light, future_positions, future_states]})
 
     return dataset, [min_pos, max_pos], [min_state, max_state]
 
@@ -348,3 +346,4 @@ class Processor(nn.Module):
         )
 
         return data
+
