@@ -17,14 +17,14 @@ This is particularly useful for simulation, autonomous agents, robotics, crowd f
 
 
 ## Repository Structure  
-data_pre_processing, data_processing, dataset_definition : processe datasets
-EncDec, GAN, ResNet : model definitions
-forecasting.py : main model
-train.py : training script
-evaluate.py : evaluation / inference script
-metrics.py : metric functions
-utils : helper functions (data loading, preprocessing, plotting, etc.)
-README.md # this file
+- **data_pre_processing**, **data_processing**, **dataset_definition** : Processe datasets
+- **EncDec**, **GAN**, **ResNet** : Model definitions
+- **forecasting.py** : Main model
+- **train.py** : Training script
+- **evaluate.py** : Evaluation / inference script
+- **metrics.py** : Metric functions
+- **utils** : Helper functions (data loading, preprocessing, plotting, etc.)
+- **README.md** : This file
 
 
 ## Usage
